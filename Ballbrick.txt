@@ -1,0 +1,96 @@
+import java.util.Scanner;
+public class zoho
+{
+static Scanner sc=new Scanner(System.in);
+	public static void main (String[] args)
+	{
+		System.out.println("Enter the size of the N*N matrix: ");
+		int n=sc.nextInt();
+		char ar[][]=new char[n][n];
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+		{
+				if(i==0||j==0||j==n-1)
+				ar[i][j]='W';
+				if((i==n-1 && j>0 && j<n/2)||(i==n-1 && j>n/2 && j<n-1))
+				ar[i][j]='G';
+				if(i==n-1 && j==n/2)
+				ar[i][j]='o';
+			}
+		}
+		solve(ar,n);
+	}
+	private static void solve(char[][]ar,int n)
+	{
+		boolean flag=true;
+		while(flag)
+		{
+			System.out.print("Enter the brick's position and brick type: ");
+			ar[sc.nextInt()][sc.nextInt()]=sc.next().charAt(0);
+			System.out.print("Do you want to continue(Y or N)?");
+			char ch=sc.next().charAt(0);
+			flag=(ch=='Y')?true:false;
+		}
+		System.out.print("Enter ball Count: ");
+		int ballcount=sc.nextInt();
+		int i=n-3,j=n/2;
+		while(ballcount>=0)
+		{
+			System.out.print("Enter the direction in which the ball needs to travel: ");
+			char direction=sc.next().charAt(0);
+			if(direction=='S')
+			{
+			while(ar[i][j]==' ')
+			{
+				i--;
+			}
+			ar[i][j]=' ';
+			display(ar,n);
+			System.out.println("Ball count is "+ ballcount);
+			i=n-3;j=n/2;
+			}
+			else if(direction=='L')
+			{
+			while(ar[i][j]==' ')
+			{
+				i--;
+				j--;
+			}
+			ar[i][j]=' ';
+			ballcount--;
+			ar[n-1][i]='o';
+			ar[n-1][n/2]='G';
+			display(ar,n);
+			System.out.println("Ball count is "+ballcount);
+			i=n-3;
+			}
+			else
+			{
+			while(ar[i][j]==' ')
+			{
+				i--;
+				j++;
+			}
+			ar[i][j]=' ';
+			ballcount--;
+			ar[n-1][j]='o';
+			ar[n-1][j/2]='G';
+			display(ar,n);
+			System.out.println("Ball count is "+ballcount);
+			i=n-3;
+			}
+		}
+	}
+	private static void display(char[][]ar,int n)
+	{
+		for(int i=0;i<n;i++)
+		{
+		for(int j=0;j<n;j++)
+		{
+			System.out.print(ar[i][j]+" ");
+		}
+		System.out.println();
+		}
+	}
+}
